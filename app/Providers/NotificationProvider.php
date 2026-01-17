@@ -14,10 +14,15 @@ class NotificationProvider extends ServiceProvider
      */
     public function register(): void
     {
-        match(config('services.notification.provider')) {
-            'email' => $this->app->bind(NotificationInterface::class, EmailService::class),
-            'sms' => $this->app->bind(NotificationInterface::class, SmsService::class)
+        $driver = config('services.notification.provider', 'email');
+
+        $implementation = match($driver) {
+            'sms' => SmsService::class,
+            'email' => EmailService::class,
+            default => EmailService::class,
         };
+
+        $this->app->bind(NotificationInterface::class, $implementation);
     }
 
     /**
