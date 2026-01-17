@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Interfaces\NotificationInterface;
-use App\Services\Notification\EmailService;
-use App\Services\Notification\SmsService;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Notification\NotifcationManager;
 
 class NotificationProvider extends ServiceProvider
 {
@@ -14,15 +12,10 @@ class NotificationProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $driver = config('services.notification.provider', 'email');
-
-        $implementation = match($driver) {
-            'sms' => SmsService::class,
-            'email' => EmailService::class,
-            default => EmailService::class,
-        };
-
-        $this->app->bind(NotificationInterface::class, $implementation);
+        $this->app->singleton(
+            NotifcationManager::class,
+            fn ($app) => new NotifcationManager($app)
+        );
     }
 
     /**

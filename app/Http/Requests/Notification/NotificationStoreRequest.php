@@ -18,7 +18,8 @@ class NotificationStoreRequest extends FormRequest
                 'required',
                 $this->getCorrectValidationRule(),
             ],
-            'message' => ['required', 'string']
+            'message' => ['required', 'string'],
+            'channel' => ['required', 'string']
         ];
     }
 

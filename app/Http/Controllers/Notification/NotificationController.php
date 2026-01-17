@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Notification;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Interfaces\NotificationInterface;
-use App\Http\Requests\Notification\NotificationStoreRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\Notification\NotifcationManager;
+use App\Http\Requests\Notification\NotificationStoreRequest;
 
 class NotificationController extends Controller
 {
     public function __construct(
-        private readonly NotificationInterface $notification
+        private readonly NotifcationManager $notifcationManager
     ) {}
 
     /**
@@ -22,7 +21,9 @@ class NotificationController extends Controller
     {
         $data = $request->validated();
 
-        $result = $this->notification->send($data['to'], $data['message']);
+        $result = $this->notifcationManager
+            ->driver($data['channel'])
+            ->send($data['to'], $data['message']);
 
         if (! $result) {
             return response()->json(
