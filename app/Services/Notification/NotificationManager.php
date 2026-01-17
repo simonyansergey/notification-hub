@@ -7,7 +7,7 @@ use App\Interfaces\NotificationInterface;
 use App\Services\Notification\SmsService;
 use Illuminate\Contracts\Foundation\Application;
 
-class NotifcationManager
+class NotificationManager
 {
     protected array $drivers = [];
 

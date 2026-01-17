@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Notification\NotifcationManager;
+use App\Services\Notification\NotificationManager;
 
 class NotificationProvider extends ServiceProvider
 {
@@ -13,8 +13,8 @@ class NotificationProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(
-            NotifcationManager::class,
-            fn ($app) => new NotifcationManager($app)
+            NotificationManager::class,
+            fn ($app) => new NotificationManager($app)
         );
     }
 

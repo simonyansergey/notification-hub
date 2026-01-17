@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Notification;
 
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use App\Services\Notification\NotifcationManager;
+use App\Services\Notification\NotificationManager;
 use App\Http\Requests\Notification\NotificationStoreRequest;
 
 class NotificationController extends Controller
 {
     public function __construct(
-        private readonly NotifcationManager $notifcationManager
+        private readonly NotificationManager $notificationManager
     ) {}
 
     /**
@@ -21,7 +21,7 @@ class NotificationController extends Controller
     {
         $data = $request->validated();
 
-        $result = $this->notifcationManager
+        $result = $this->notificationManager
             ->driver($data['channel'])
             ->send($data['to'], $data['message']);
 
