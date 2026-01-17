@@ -19,7 +19,7 @@ class NotificationManager
     {
         $name ??= config('services.notification.provider', 'email');
 
-        if ($this->drivers[$name]) {
+        if (isset($this->drivers[$name])) {
             return $this->drivers[$name];
         }
 
